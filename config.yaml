@@ -68,15 +68,18 @@ teams:
     sport: football
     league: nfl
     espn_slug: ne
+    espn_id: 17
 
   boston_celtics:
     name: Boston Celtics
     sport: basketball
     league: nba
     espn_slug: bos
+    espn_id: 2
 
   boston_red_sox:
     name: Boston Red Sox
     sport: baseball
     league: mlb
     espn_slug: bos
+    espn_id: 2  # Added ESPN ID for Red Sox (example)
