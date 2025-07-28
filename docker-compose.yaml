@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  espn-api:
+    container_name: espn-api
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ./cache:/app/cache
+    environment:
+      - CACHE_EXPIRATION=3600  # Optional: you can pass env vars if you want to read them in your app
+    restart: unless-stopped
