@@ -1,0 +1,82 @@
+leagues:
+  - sport: soccer
+    league: eng.1
+    name: English Premier League
+    sport_path: "soccer"
+    league_path: "eng.1"
+
+  - sport: cricket
+    league: mens.the-hundred
+    name: The Hundred
+    sport_path: "cricket"
+    league_path: "series/_/id/19601"
+    espn_id: 19601
+    espn_slug: mens-100
+
+  - sport: football
+    league: nfl
+    name: NFL
+    sport_path: "football"
+    league_path: "nfl"
+    espn_slug: nfl
+
+  - sport: football
+    league: college-football
+    name: NCAA Football
+    sport_path: "football"
+    league_path: "college-football"
+    espn_slug: college-football
+
+  - sport: basketball
+    league: nba
+    name: NBA
+    sport_path: "basketball"
+    league_path: "nba"
+    espn_slug: nba
+
+  - sport: baseball
+    league: mlb
+    name: MLB
+    sport_path: "baseball"
+    league_path: "mlb"
+    espn_slug: mlb
+
+  - sport: formula-one
+    league: f1
+    name: Formula 1
+    sport_path: "motor-racing"
+    league_path: "f1"
+    espn_slug: f1
+
+  - sport: tennis
+    league: atp
+    name: ATP Tour
+    sport_path: "tennis"
+    league_path: "atp"
+    espn_slug: atp
+
+teams:
+  arsenal:
+    name: Arsenal
+    sport: soccer
+    league: eng.1
+    espn_id: 359
+    espn_slug: arsenal
+
+  new_england_patriots:
+    name: New England Patriots
+    sport: football
+    league: nfl
+    espn_slug: ne
+
+  boston_celtics:
+    name: Boston Celtics
+    sport: basketball
+    league: nba
+    espn_slug: bos
+
+  boston_red_sox:
+    name: Boston Red Sox
+    sport: baseball
+    league: mlb
+    espn_slug: bos
