@@ -2,8 +2,18 @@ import time
 import yaml
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware  # ✅ CORS import
 
 app = FastAPI()
+
+# ✅ CORS middleware setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can change this to ["http://192.168.1.226:3000"] for tighter control
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load config.yaml on startup
 CONFIG_PATH = "config.yaml"
@@ -80,6 +90,7 @@ def api_team_no_league(team_slug: str):
 
     raise HTTPException(status_code=404, detail="Team not found in config")
 
+
 @app.get("/api/espn/fixtures/{team_slug}/{league_slug}")
 def api_fixtures(team_slug: str, league_slug: str):
     for team_key, team_info in config.get("teams", {}).items():
@@ -94,14 +105,8 @@ def api_fixtures(team_slug: str, league_slug: str):
 
             data = get_cached_team_data(sport_slug, league_slug, team_slug, team_id)
 
-            # ✅ Corrected line
             fixtures = data.get("team", {}).get("nextEvent", [])
 
             return {"fixtures": fixtures}
 
     raise HTTPException(status_code=404, detail="Team or league not found in config")
-
-
-
-
-
