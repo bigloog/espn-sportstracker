@@ -3,13 +3,14 @@ import yaml
 import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware  # ✅ CORS import
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
 # ✅ CORS middleware setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # You can change this to ["http://192.168.1.226:3000"] for tighter control
+    allow_origins=["*"],  # Change to your frontend origin for tighter control if desired
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -110,3 +111,32 @@ def api_fixtures(team_slug: str, league_slug: str):
             return {"fixtures": fixtures}
 
     raise HTTPException(status_code=404, detail="Team or league not found in config")
+
+
+@app.get("/api/teams")
+def get_all_teams():
+    results = []
+    for team_key, team_info in config.get("teams", {}).items():
+        sport_slug = find_sport_slug(team_info.get("league"))
+        if not sport_slug:
+            continue
+        try:
+            team_data = get_cached_team_data(
+                sport_slug,
+                team_info.get("league"),
+                team_info.get("espn_slug"),
+                team_info.get("espn_id"),
+            )
+            # ESPN typically returns logos in a list under 'team' -> 'logos'
+            logos = team_data.get("team", {}).get("logos", [])
+            logo_url = logos[0].get("href") if logos else None
+
+            results.append({
+                "name": team_info.get("name"),
+                "league": team_info.get("league"),
+                "espn_slug": team_info.get("espn_slug"),
+                "logo": logo_url,
+            })
+        except Exception:
+            continue
+    return JSONResponse(content=results)
